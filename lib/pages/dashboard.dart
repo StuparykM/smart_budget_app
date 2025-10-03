@@ -16,10 +16,32 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
   Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: Colors.white70,
-      body: Center(
-        child:Text(
-          'content here',
-          style: TextStyle(color: Colors.black, fontSize: 36),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Container(
+              height: 250,
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.black45,
+                  width: 1,
+                ),
+                  borderRadius: BorderRadius.circular(16),
+                boxShadow:[ BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(-2, 1),
+                  blurRadius: 8,
+                  blurStyle: BlurStyle.normal,
+                  spreadRadius: 1,
+                ),
+              ]
+              ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: Container(
