@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_budget_app/pages/forgot_password.dart';
+import 'package:smart_budget_app/pages/dashboard.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
@@ -158,6 +159,7 @@ class _LogInPageState extends State<LogInPage>
                                   : ElevatedButton(
                                       onPressed: _handleLogin,
                                       style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.black54,
                                         padding: EdgeInsets.symmetric(
                                           horizontal: 40,
                                           vertical: 14,

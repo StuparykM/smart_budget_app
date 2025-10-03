@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_budget_app/pages/log_in_page.dart';
 
 class Dashboard extends StatefulWidget{
   const Dashboard({super.key});
@@ -10,6 +12,29 @@ class Dashboard extends StatefulWidget{
 
 class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMixin{
   String? _errorMessage;
+
+  void _confirmLogout() async{
+    final shouldLogout = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Confirm Logout'),
+          content: Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context, false),
+            child: Text('Cancel'),
+            ),
+            TextButton(onPressed: () => Navigator.pop(context, true),
+            child: Text('Logout'),
+            ),
+          ],
+        )
+    );
+
+    if (shouldLogout == true){
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushReplacementNamed(context, '/log_in_page');
+    }
+  }
 
 
   @override
@@ -60,7 +85,10 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
           child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(Icons.logout, color: Colors.black45),
+            IconButton(
+                icon: Icon(Icons.logout, color: Colors.black45),
+                onPressed: _confirmLogout,
+            ),
             Icon(Icons.account_circle_outlined, color: Colors.black45),
             Icon(Icons.settings, color: Colors.black45)
           ],
