@@ -44,5 +44,8 @@ flutter:
       - family: Michroma
         fonts:
           - asset: assets/fonts/Michroma-Regular.ttf
+  assets:
+   - assets/textures/noise.png
+   - assets/textures/noise_soft.png
 
 

@@ -1,20 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_budget_app/pages/forgot_password.dart';
 
-class LogInPage extends StatefulWidget{
+class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
 
   @override
   State<LogInPage> createState() => _LogInPageState();
 }
 
-class _LogInPageState extends State<LogInPage>{
+class _LogInPageState extends State<LogInPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
 
-  Future<void> _handleLogin() async{
+  Future<void> _handleLogin() async {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
@@ -35,13 +36,33 @@ class _LogInPageState extends State<LogInPage>{
         _isLoading = false;
       });
     }
+
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFF1D284D),
-        body: Center(
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          // 🔷 Background: ShaderMask over noise texture
+          ShaderMask(
+            shaderCallback: (rect) {
+              return LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFF1E364A), Color(0xFF090E17)],
+              ).createShader(rect);
+            },
+            blendMode: BlendMode.overlay,
+            child: Image.asset(
+              'assets/textures/noise_soft.png',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+          ),
+          Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
@@ -58,8 +79,10 @@ class _LogInPageState extends State<LogInPage>{
                   ),
                   Card(
                     elevation: 6,
-                    color: const Color(0x30FAFAFA),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    color: const Color(0x10B1B1B3),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(46.0),
                       child: Column(
@@ -68,53 +91,75 @@ class _LogInPageState extends State<LogInPage>{
                           SizedBox(height: 40),
                           TextField(
                             controller: _emailController,
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               hintText: 'Email',
-                              hintStyle: TextStyle(color: Colors.black),
-                              filled: true,
-                              fillColor: Colors.white,
+                              hintStyle: TextStyle(color: Colors.white),
+                              filled: false,
+                              fillColor: Colors.transparent,
                               border: OutlineInputBorder(),
                             ),
                           ),
                           SizedBox(height: 20),
                           TextField(
                             controller: _passwordController,
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.white),
                             obscureText: true,
                             decoration: InputDecoration(
                               hintText: 'Password',
-                              hintStyle: TextStyle(color: Colors.black),
-                              filled: true,
-                              fillColor: Colors.white,
+                              hintStyle: TextStyle(color: Colors.white),
+                              filled: false,
+                              fillColor: Colors.transparent,
                               border: OutlineInputBorder(),
                             ),
                           ),
-                          if(_errorMessage != null)
+                          if (_errorMessage != null)
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
-                              child: Text(_errorMessage!, style: TextStyle(color: Colors.red)),
+                              child: Text(
+                                _errorMessage!,
+                                style: TextStyle(color: Colors.red),
+                              ),
                             ),
                           SizedBox(height: 20),
                           _isLoading
                               ? CircularProgressIndicator()
                               : ElevatedButton(
-                            onPressed: _handleLogin,
-                            child: Text('Log In',
-                            style: TextStyle(
-                                color: Colors.white,
-                            )),
-                          ),
+                                  onPressed: _handleLogin,
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16),)
+                                  ),
+                                  child: Text(
+                                    'Log In',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                          //SizedBox(height: 20),
+                          // TextButton(
+                          //   onPressed:(){
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
+                          //     );
+                          //   },
+                          //   child: Text(
+                          //     'Forgot my password',
+                          //         style: TextStyle(
+                          //       fontSize: 14,
+                          //   ),
+                          //   ),
+                          // ),
                         ],
-                      )
-                    )
-                  )
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            )
-        )
+            ),
+          ),
+        ],
+      ),
     );
   }
-
 }
-
