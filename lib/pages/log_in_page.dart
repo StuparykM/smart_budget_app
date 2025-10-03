@@ -19,6 +19,7 @@ class _LogInPageState extends State<LogInPage>
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -136,13 +137,22 @@ class _LogInPageState extends State<LogInPage>
                               TextField(
                                 controller: _passwordController,
                                 style: TextStyle(color: Colors.white),
-                                obscureText: true,
+                                obscureText: _obscureText,
                                 decoration: InputDecoration(
                                   hintText: 'Password',
                                   hintStyle: TextStyle(color: Colors.white),
                                   filled: false,
                                   fillColor: Colors.transparent,
                                   border: OutlineInputBorder(),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(_obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                        color: Colors.white),
+                                    onPressed: (){
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    }
+                                  )
                                 ),
                               ),
                               if (_errorMessage != null)
