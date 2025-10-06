@@ -57,7 +57,7 @@ class _LogInPageState extends State<LogInPage>
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/dashboard');
     } on FirebaseAuthException catch (e) {
       setState(() {
         _errorMessage = e.message;
