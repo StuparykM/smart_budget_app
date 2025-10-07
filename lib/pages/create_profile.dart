@@ -13,7 +13,7 @@ class CreateProfile extends StatefulWidget {
 class _CreateProfileState extends State<CreateProfile>
 with SingleTickerProviderStateMixin{
   String? _errorMessage;
-  //bool _isLoading = false;
+  bool _isLoading = false;
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
   final _email = TextEditingController();
