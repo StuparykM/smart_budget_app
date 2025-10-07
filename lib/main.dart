@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_budget_app/pages/create_profile.dart';
 import 'package:smart_budget_app/pages/dashboard.dart';
 import 'package:smart_budget_app/pages/log_in_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,10 +22,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // home: FirebaseAuth.instance.currentUser == null ? LogInPage() : Dashboard(),
-        initialRoute: '/dashboard',
+        initialRoute: '/create_profile',
         routes: {
           '/log_in_page': (context) => LogInPage(),
           '/dashboard': (context) => Dashboard(),
+          '/create_profile': (context) => CreateProfile(),
         }
 
     );

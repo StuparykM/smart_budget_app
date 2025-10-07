@@ -42,7 +42,7 @@ class _DashboardState extends State<Dashboard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: Color(0xFF344969),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -53,7 +53,7 @@ class _DashboardState extends State<Dashboard>
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Colors.black45, width: 1),
+                border: Border.all(color: Colors.black, width: 2),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -76,7 +76,7 @@ class _DashboardState extends State<Dashboard>
                   padding: EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: Colors.black45, width: 1),
+                    border: Border.all(color: Colors.black, width: 2),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
@@ -95,7 +95,7 @@ class _DashboardState extends State<Dashboard>
                   padding: EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: Colors.black45, width: 1),
+                    border: Border.all(color: Colors.black, width: 2),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
@@ -109,6 +109,26 @@ class _DashboardState extends State<Dashboard>
                   ),
                 ),
               ],
+            ),
+            SizedBox(height: 40),
+            Container(
+              height: 200,
+              width: double.infinity,
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black, width: 2),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(-2, 1),
+                    blurRadius: 8,
+                    blurStyle: BlurStyle.normal,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
