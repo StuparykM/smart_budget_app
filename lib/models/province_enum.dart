@@ -1,0 +1,15 @@
+enum CanadianProvince {
+  alberta,
+  britishColumbia,
+  manitoba,
+  newBrunswick,
+  newfoundlandAndLabrador,
+  novaScotia,
+  ontario,
+  princeEdwardIsland,
+  quebec,
+  saskatchewan,
+  northwestTerritories,
+  nunavut,
+  yukon,
+}

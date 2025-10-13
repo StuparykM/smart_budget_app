@@ -1,0 +1,17 @@
+enum CanadianCity {
+  toronto,
+  montreal,
+  vancouver,
+  calgary,
+  edmonton,
+  ottawa,
+  winnipeg,
+  quebecCity,
+  hamilton,
+  kitchener,
+  halifax,
+  victoria,
+  regina,
+  saskatoon,
+  stJohns,
+}
