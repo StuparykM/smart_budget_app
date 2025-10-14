@@ -151,6 +151,10 @@ class _CreateProfileState extends State<CreateProfile>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text('Fill out account details below',
+                        style: TextStyle(color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,)),
                         const SizedBox(height: 10),
                         TextField(
                           controller: _firstName,
@@ -219,7 +223,7 @@ class _CreateProfileState extends State<CreateProfile>
                             fillColor: Colors.transparent,
                             border: OutlineInputBorder(),
                           ),
-                          hint: Text('Select a Country'),
+                          dropdownColor: Color(0xFF000000),
                           items: Country.values.map((country) {
                             return DropdownMenuItem(
                               value: country,
@@ -240,7 +244,7 @@ class _CreateProfileState extends State<CreateProfile>
                               fillColor: Colors.transparent,
                               border: OutlineInputBorder(),
                             ),
-                          hint: Text('Select your province'),
+                          dropdownColor: Color(0xFF000000),
                           items: CanadianProvince.values.map((province){
                             return DropdownMenuItem(
                               value: province,
@@ -262,7 +266,7 @@ class _CreateProfileState extends State<CreateProfile>
                             fillColor: Colors.transparent,
                             border: OutlineInputBorder(),
                           ),
-                          hint: Text('Select your City'),
+                          dropdownColor: Color(0xFF000000),
                           items: CanadianCity.values.map((city){
                             return DropdownMenuItem(
                               value: city,
