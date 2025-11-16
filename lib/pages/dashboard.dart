@@ -34,9 +34,13 @@ class _DashboardState extends State<Dashboard>
     );
 
     if (shouldLogout == true) {
-      // await FirebaseAuth.instance.signOut();
+      await FirebaseAuth.instance.signOut();
       Navigator.pushReplacementNamed(context, '/log_in_page');
     }
+  }
+
+  void navToProfile() async{
+    Navigator.pushNamed(context, '/user_profile');
   }
 
   @override
@@ -50,6 +54,7 @@ class _DashboardState extends State<Dashboard>
             Container(
               height: 250,
               width: double.infinity,
+              margin: EdgeInsets.only(top: 30),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -66,53 +71,9 @@ class _DashboardState extends State<Dashboard>
                 ],
               ),
             ),
-            SizedBox(height: 65),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 200,
-                  width: 200,
-                  padding: EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 2),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(-2, 1),
-                        blurRadius: 8,
-                        blurStyle: BlurStyle.normal,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 200,
-                  width: 200,
-                  padding: EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 2),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(-2, 1),
-                        blurRadius: 8,
-                        blurStyle: BlurStyle.normal,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
             SizedBox(height: 40),
             Container(
-              height: 200,
+              height: 450,
               width: double.infinity,
               padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -153,7 +114,11 @@ class _DashboardState extends State<Dashboard>
               icon: Icon(Icons.logout, color: Colors.black45),
               onPressed: _confirmLogout,
             ),
-            Icon(Icons.account_circle_outlined, color: Colors.black45),
+            IconButton(
+              icon: Icon(Icons.account_circle_outlined, color: Colors.black45),
+              onPressed: navToProfile,
+            ),
+
             Icon(Icons.settings, color: Colors.black45),
           ],
         ),

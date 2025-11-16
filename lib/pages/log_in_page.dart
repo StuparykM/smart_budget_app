@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_budget_app/pages/forgot_password.dart';
 import 'package:smart_budget_app/pages/dashboard.dart';
+import 'package:smart_budget_app/services/auth_service.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
@@ -46,28 +47,7 @@ class _LogInPageState extends State<LogInPage>
     super.dispose();
   }
 
-  Future<void> _handleLogin() async {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
 
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-      Navigator.pushReplacementNamed(context, '/dashboard');
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        _errorMessage = e.message;
-      });
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +147,13 @@ class _LogInPageState extends State<LogInPage>
                               _isLoading
                                   ? CircularProgressIndicator()
                                   : ElevatedButton(
-                                      onPressed: _handleLogin,
+                                      onPressed: () async{
+                                        await AuthenticationService().signIn(
+                                          email: _emailController.text.trim(),
+                                          password: _passwordController.text.trim(),
+                                            context: context
+                                        );
+                                      },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.black54,
                                         padding: EdgeInsets.symmetric(
