@@ -51,5 +51,15 @@ flutter:
    - assets/textures/noise.png
    - assets/textures/noise_soft.png
    - assets/images/coffee.webp
+   - assets/images/arcraiders.jpg
+   - assets/images/beats.jpg
+   - assets/images/desklamp.webp
+   - assets/images/groceries.jpg
+   - assets/images/gymmemberhsip.webp
+   - assets/images/mouse.jpg
+   - assets/images/notebook.jpg
+   - assets/images/projector.jpg
+   - assets/images/speaker.webp
+   - assets/images/subwaysandwich.jpg
 
 

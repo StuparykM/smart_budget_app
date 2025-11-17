@@ -1,11 +1,11 @@
 import 'dart:core';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:smart_budget_app/enums/city_enum.dart';
-import 'package:smart_budget_app/enums/country_enum.dart';
+import 'package:smart_budget_app/utils/city_enum.dart';
+import 'package:smart_budget_app/utils/country_enum.dart';
 import 'package:crypto/crypto.dart';
 
-import '../enums/province_enum.dart';
+import '../utils/province_enum.dart';
 
 
 class AppUser {

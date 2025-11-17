@@ -1,0 +1,82 @@
+[
+{
+"id": "1",
+"image": "../assets/images/beats.jpg",
+"title": "Beats Headphones",
+"cost": 189.99,
+"description": "Noise-cancelling over-ear headphones with Bluetooth connectivity.",
+"category": "unsorted"
+},
+{
+"id": "2",
+"image": "../assets/images/groceries.jpg",
+"title": "Groceries",
+"cost": 150.00,
+"description": "Food from local grocer",
+"category": "essential"
+},
+{
+"id": "3",
+"image": "../assets/images/projector.jpg",
+"title": "Portable Projector",
+"cost": 129.50,
+"description": "Compact projector for movies and presentations on the go.",
+"category": "non-essential"
+},
+{
+"id": "4",
+"image": "../assets/images/notebook.jpg",
+"title": "Eco-Friendly Notebook",
+"cost": 12.99,
+"description": "Reusable notebook with erasable pages and cloud sync.",
+"category": "unsorted"
+},
+{
+"id": "5",
+"image": "../assets/images/arcraiders.jpg",
+"title": "Arc Raiders",
+"cost": 57.85,
+"description": "Hit 2025 Embark Studios Video Game Arc Raiders(tm)",
+"category": "unsorted"
+},
+{
+"id": "6",
+"image": "../assets/images/desklamp.webp",
+"title": "LED Desk Lamp",
+"cost": 15.99,
+"description": "Adjustable brightness and color temperature with USB charging port.",
+"category": "essential"
+},
+{
+"id": "7",
+"image": "../assets/images/gymmemberhsip.webp",
+"title": "Gym Membership",
+"cost": 40.00,
+"description": "Membership to Fit4More",
+"category": "essential"
+},
+{
+"id": "8",
+"image": "../assets/images/speaker.webp",
+"title": "Bluetooth Speaker",
+"cost": 39.99,
+"description": "Water-resistant speaker with deep bass and long battery life.",
+"category": "non-essential"
+},
+{
+"id": "9",
+"image": "../assets/images/subwaysandwich.jpg",
+"title": "Subway Sandwich",
+"cost": 5.00,
+"description": "A mediocre sandwich made of mystery meat",
+"category": "unsorted"
+},
+{
+"id": "10",
+"image": "../assets/images/mouse.jpg",
+"title": "Ergonomic Mouse",
+"cost": 29.95,
+"description": "Designed for comfort and precision with customizable buttons.",
+"category": "unsorted"
+}
+]
