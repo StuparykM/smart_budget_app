@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_budget_app/pages/log_in_page.dart';
+import '../services/item_service.dart';
+import '../widgets/dashboard_item_card.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -13,6 +16,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
   String? _errorMessage;
+  late final essential = context.watch<ItemService>().essential;
+  late final nonEssential = context.watch<ItemService>().nonEssential;
 
   void _confirmLogout() async {
     final shouldLogout = await showDialog<bool>(
@@ -73,9 +78,9 @@ class _DashboardState extends State<Dashboard>
             ),
             SizedBox(height: 40),
             Container(
-              height: 450,
+              height: 480,
               width: double.infinity,
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.black, width: 2),
@@ -83,14 +88,29 @@ class _DashboardState extends State<Dashboard>
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black26,
-                    offset: Offset(-2, 1),
+                    offset: const Offset(-2, 1),
                     blurRadius: 8,
                     blurStyle: BlurStyle.normal,
                     spreadRadius: 1,
                   ),
                 ],
               ),
+              child: Consumer<ItemService>(
+                builder: (context, service, _) {
+                  final allItems = [...service.essential, ...service.nonEssential];
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: allItems.length,
+                    itemBuilder: (context, index) {
+                      final item = allItems[index];
+                      return DashboardItemCard(item);
+                    },
+                  );
+                },
+              ),
             ),
+
           ],
         ),
       ),

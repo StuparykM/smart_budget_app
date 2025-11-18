@@ -21,7 +21,7 @@
 "title": "Portable Projector",
 "cost": 129.50,
 "description": "Compact projector for movies and presentations on the go.",
-"category": "non-essential"
+"category": "nonEssential"
 },
 {
 "id": "4",
@@ -61,7 +61,7 @@
 "title": "Bluetooth Speaker",
 "cost": 39.99,
 "description": "Water-resistant speaker with deep bass and long battery life.",
-"category": "non-essential"
+"category": "nonEssential"
 },
 {
 "id": "9",

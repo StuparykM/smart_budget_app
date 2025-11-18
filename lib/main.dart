@@ -7,6 +7,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:smart_budget_app/pages/sorting_page.dart';
 import 'package:smart_budget_app/pages/user_profile.dart';
 import 'firebase_options.dart';
+import '../services/item_service.dart';
+import 'package:provider/provider.dart';
 
 
 void main() async{
@@ -26,7 +28,13 @@ void main() async{
   }
 
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ItemService()..loadFromJson(),
+      child: const MyApp(),
+    ),
+  );
+
 }
 
 class MyApp extends StatelessWidget {

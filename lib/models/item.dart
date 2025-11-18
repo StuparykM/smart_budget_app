@@ -7,7 +7,7 @@ class Item{
   late final String title;
   late final double cost;
   late final String description;
-  late final Image image;
+  late final String image;
   late Category category;
 
   Item({
@@ -27,7 +27,10 @@ class Item{
       cost: (json['cost'] as num).toDouble(),
       description: json['description'],
       image: json['image'],
-      category: json['category'],
+      category: Category.values.firstWhere(
+            (c) => c.name == json['category'],
+        orElse: () => Category.unsorted,
+      ),
     );
   }
 }
