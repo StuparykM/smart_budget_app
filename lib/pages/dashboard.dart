@@ -18,6 +18,7 @@ class _DashboardState extends State<Dashboard>
   String? _errorMessage;
   late final essential = context.watch<ItemService>().essential;
   late final nonEssential = context.watch<ItemService>().nonEssential;
+  late final unsorted = context.watch<ItemService>().unsorted;
 
   void _confirmLogout() async {
     final shouldLogout = await showDialog<bool>(
@@ -44,7 +45,7 @@ class _DashboardState extends State<Dashboard>
     }
   }
 
-  void navToProfile() async{
+  void navToProfile() async {
     Navigator.pushNamed(context, '/user_profile');
   }
 
@@ -56,31 +57,12 @@ class _DashboardState extends State<Dashboard>
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Container(
-              height: 250,
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 30),
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black, width: 2),
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    offset: Offset(-2, 1),
-                    blurRadius: 8,
-                    blurStyle: BlurStyle.normal,
-                    spreadRadius: 1,
-                  ),
-                ],
-              ),
-            ),
             SizedBox(height: 40),
             Container(
               height: 480,
               width: double.infinity,
               padding: const EdgeInsets.all(16.0),
+              margin: EdgeInsets.only(top: 200),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.black, width: 2),
@@ -97,8 +79,10 @@ class _DashboardState extends State<Dashboard>
               ),
               child: Consumer<ItemService>(
                 builder: (context, service, _) {
-                  final allItems = [...service.essential, ...service.nonEssential];
-
+                  final allItems = [
+                    ...service.essential,
+                    ...service.nonEssential,
+                  ];
                   return ListView.builder(
                     shrinkWrap: true,
                     itemCount: allItems.length,
@@ -110,7 +94,32 @@ class _DashboardState extends State<Dashboard>
                 },
               ),
             ),
-
+            const Spacer(),
+            Consumer<ItemService>(
+              builder: (context, service, _) {
+                if (service.unsorted.isEmpty) return const SizedBox.shrink();
+                return SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/sorting_page');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange.shade500,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    child: const Text(
+                      'You have unsorted transactions',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -121,7 +130,7 @@ class _DashboardState extends State<Dashboard>
           boxShadow: [
             BoxShadow(
               color: Colors.black26,
-              offset: Offset(0, -1),
+              offset: const Offset(0, -1),
               blurRadius: 8,
               spreadRadius: 1,
             ),
@@ -131,15 +140,17 @@ class _DashboardState extends State<Dashboard>
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             IconButton(
-              icon: Icon(Icons.logout, color: Colors.black45),
+              icon: const Icon(Icons.logout, color: Colors.black45),
               onPressed: _confirmLogout,
             ),
             IconButton(
-              icon: Icon(Icons.account_circle_outlined, color: Colors.black45),
+              icon: const Icon(
+                Icons.account_circle_outlined,
+                color: Colors.black45,
+              ),
               onPressed: navToProfile,
             ),
-
-            Icon(Icons.settings, color: Colors.black45),
+            const Icon(Icons.settings, color: Colors.black45),
           ],
         ),
       ),

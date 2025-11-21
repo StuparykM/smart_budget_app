@@ -15,6 +15,10 @@ class ItemService extends ChangeNotifier{
   List<Item> get nonEssential =>
       _items.where((item) => item.category == Category.nonEssential).toList();
 
+  List<Item> get unsorted =>
+      _items.where((item) => item.category == Category.unsorted).toList();
+
+
   Future<void> loadFromJson() async{
     final jsonString = await rootBundle.loadString('assets/data/mock_data.json');
     final List<dynamic> jsonList = jsonDecode(jsonString);

@@ -77,28 +77,7 @@ class _UserProfileState extends State<UserProfile>
                 ),
               ),
             ),
-            const Spacer(),
 
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // navigation
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange.shade500,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: const Text(
-                  'You have unsorted transactions',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

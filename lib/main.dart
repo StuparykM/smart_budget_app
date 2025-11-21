@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           '/dashboard': (context) => Dashboard(),
           '/create_profile': (context) => CreateProfile(),
           '/user_profile': (context) => UserProfile(),
-          '/sorting_page': (context) => Transaction()
+          '/sorting_page': (context) => SortingPage()
         }
 
     );
