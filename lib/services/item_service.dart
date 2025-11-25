@@ -29,6 +29,7 @@ class ItemService extends ChangeNotifier{
   void updateCategory(String id, Category newCategory){
     final item = _items.firstWhere((i) => i.id == id);
     item.category = newCategory;
+    notifyListeners();
   }
 
 

@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_budget_app/pages/log_in_page.dart';
 import 'package:swipe_cards/swipe_cards.dart';
+import '../services/item_service.dart';
 import '../utils/category_enum.dart';
 import '../widgets/sorting_item_card.dart';
 import '../models/item.dart';
@@ -18,16 +20,34 @@ class SortingPage extends StatefulWidget {
 
 class _SortingPageState extends State<SortingPage> {
   String? _errorMessage;
-  MatchEngine _matchEngine = MatchEngine(swipeItems: []);
-  final List<SwipeItem> _swipeItems = [];
-  List<Item> items = [];
+  late MatchEngine _matchEngine;
   bool _stackFinished = false;
+  Alignment? _alignment;
 
   @override
   void initState() {
     super.initState();
-    _loadItems();
+    _buildItems();
   }
+
+  void _buildItems(){
+    final service = context.read<ItemService>();
+
+    final swipeItems = service.unsorted.map((item) {
+      return SwipeItem(
+        content: item,
+        likeAction: () {
+          service.updateCategory(item.id, Category.essential);
+        },
+        nopeAction: () {
+          service.updateCategory(item.id, Category.nonEssential);
+        },
+      );
+    }).toList();
+
+    _matchEngine = MatchEngine(swipeItems: swipeItems);
+  }
+
 
   void _confirmLogout() async {
     final shouldLogout = await showDialog<bool>(
@@ -55,29 +75,6 @@ class _SortingPageState extends State<SortingPage> {
     }
   }
 
-  Future<void> _loadItems() async {
-    final jsonString = await rootBundle.loadString('assets/data/mock_data.json');
-    final List<dynamic> jsonList = jsonDecode(jsonString);
-    items = jsonList.map((e) => Item.fromJson(e)).toList();
-
-    _swipeItems.clear();
-    for (var item in items.where((i) => i.category == Category.unsorted)) {
-      _swipeItems.add(
-        SwipeItem(
-          content: item,
-          likeAction: () {
-            setState(() => item.category = Category.essential);
-          },
-          nopeAction: () {
-            setState(() => item.category = Category.nonEssential);
-          },
-        ),
-      );
-    }
-    setState(() {
-      _matchEngine = MatchEngine(swipeItems: _swipeItems);
-    });
-  }
 
 
   @override
@@ -98,11 +95,13 @@ class _SortingPageState extends State<SortingPage> {
           child: SwipeCards(
             matchEngine: _matchEngine,
             itemBuilder: (context, index) {
-              final item = _swipeItems[index].content as Item;
+              final item = _matchEngine.currentItem?.content as Item;
               return SortingItemCard(item: item);
             },
             onStackFinished: () {
-                _stackFinished = true;
+                setState(() {
+                  _stackFinished = true;
+                });
             },
           ),
         ),
