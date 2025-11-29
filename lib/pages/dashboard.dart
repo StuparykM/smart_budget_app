@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_budget_app/pages/log_in_page.dart';
 import '../services/item_service.dart';
+import '../widgets/budget_dialog.dart';
+import '../widgets/budget_summary.dart';
 import '../widgets/dashboard_item_card.dart';
 
 class Dashboard extends StatefulWidget {
@@ -19,6 +21,7 @@ class _DashboardState extends State<Dashboard>
   late final essential = context.watch<ItemService>().essential;
   late final nonEssential = context.watch<ItemService>().nonEssential;
   late final unsorted = context.watch<ItemService>().unsorted;
+  bool _dialogShown = false;
 
   void _confirmLogout() async {
     final shouldLogout = await showDialog<bool>(
@@ -45,9 +48,21 @@ class _DashboardState extends State<Dashboard>
     }
   }
 
-  void navToProfile() async {
-    Navigator.pushNamed(context, '/user_profile');
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_dialogShown) {
+        _dialogShown = true;
+        final service = Provider.of<ItemService>(context, listen: false);
+        showDialog(
+          context: context,
+          builder: (ctx) => BudgetDialog(service: service),
+        );
+      }
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +72,44 @@ class _DashboardState extends State<Dashboard>
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            SizedBox(height: 40),
+            SizedBox(height: 50),
+            Container(
+              height: 200,
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(-2, 1),
+                  blurRadius: 8,
+                  blurStyle: BlurStyle.normal,
+                  spreadRadius: 1,
+                ),
+                ],
+              ),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 70),
+                  child: Consumer<ItemService>(
+                    builder: (context, service, _) {
+                      return BudgetSummary(
+                        budget: service.budget,
+                        spent: service.categorizedCost,
+                      );
+                    },
+                  ),
+                )
+              )
+            ),
+
             Container(
               height: 480,
               width: double.infinity,
               padding: const EdgeInsets.all(16.0),
-              margin: EdgeInsets.only(top: 200),
+              margin: EdgeInsets.only(top: 10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.black, width: 2),
@@ -142,13 +189,6 @@ class _DashboardState extends State<Dashboard>
             IconButton(
               icon: const Icon(Icons.logout, color: Colors.black45),
               onPressed: _confirmLogout,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.account_circle_outlined,
-                color: Colors.black45,
-              ),
-              onPressed: navToProfile,
             ),
             const Icon(Icons.settings, color: Colors.black45),
           ],

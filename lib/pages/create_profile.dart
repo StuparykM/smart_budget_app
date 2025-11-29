@@ -7,6 +7,8 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:smart_budget_app/services/auth_service.dart';
 
+import 'log_in_page.dart';
+
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
 
@@ -22,11 +24,13 @@ class _CreateProfileState extends State<CreateProfile>
   final _password = TextEditingController();
   final _confirmPass = TextEditingController();
   bool _obscureText = true;
+  bool _obscureConfirm = true;
 
   @override
   void initState() {
     super.initState();
     _obscureText = true;
+    _obscureConfirm = true;
   }
 
   String hashPassword(String password) {
@@ -119,6 +123,7 @@ class _CreateProfileState extends State<CreateProfile>
                         const SizedBox(height: 10),
                         TextFormField(
                           controller: _confirmPass,
+                          obscureText: _obscureConfirm,
                           style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             hintText: 'Confirm Password',
@@ -128,40 +133,64 @@ class _CreateProfileState extends State<CreateProfile>
                             border: const OutlineInputBorder(),
                             suffixIcon: IconButton(
                               icon: Icon(
-                                _obscureText
+                                _obscureConfirm
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
                                 color: Colors.white,
                               ),
                               onPressed: () {
                                 setState(() {
-                                  _obscureText = !_obscureText;
+                                  _obscureConfirm = !_obscureConfirm;
                                 });
                               },
                             ),
                           ),
                         ),
                         const SizedBox(height: 15),
-                        ElevatedButton(
-                          onPressed: () async {
-                            AuthenticationService().signup(
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              AuthenticationService().signup(
                                 email: _email.text.trim(),
                                 password: _password.text.trim(),
-                                context: context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black54,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 40,
-                              vertical: 14,
+                                context: context,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black54,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 40,
+                                vertical: 14,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                            child: const Text(
+                              'Create Account',
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
-                          child: Text(
-                            'Create Account',
-                            style: TextStyle(color: Colors.white),
+                        ),
+                        const SizedBox(height: 12),
+                        Center(
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LogInPage(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'Return to Log In',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -176,3 +205,4 @@ class _CreateProfileState extends State<CreateProfile>
     );
   }
 }
+

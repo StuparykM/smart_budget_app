@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_budget_app/pages/create_profile.dart';
 import 'package:smart_budget_app/pages/forgot_password.dart';
 import 'package:smart_budget_app/pages/dashboard.dart';
 import 'package:smart_budget_app/services/auth_service.dart';
@@ -21,6 +22,8 @@ class _LogInPageState extends State<LogInPage>
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
   bool _obscureText = true;
+
+
 
   @override
   void initState() {
@@ -144,48 +147,61 @@ class _LogInPageState extends State<LogInPage>
                                   ),
                                 ),
                               SizedBox(height: 20),
-                              _isLoading
-                                  ? CircularProgressIndicator()
-                                  : ElevatedButton(
-                                      onPressed: () async{
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: _isLoading
+                                        ? const Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                        : ElevatedButton(
+                                      onPressed: () async {
                                         await AuthenticationService().signIn(
                                           email: _emailController.text.trim(),
                                           password: _passwordController.text.trim(),
-                                            context: context
+                                          context: context,
                                         );
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.black54,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 40,
-                                          vertical: 14,
-                                        ),
+                                        padding: const EdgeInsets.symmetric(vertical: 14),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            16,
-                                          ),
+                                          borderRadius: BorderRadius.circular(16),
                                         ),
                                       ),
-                                      child: Text(
+                                      child: const Text(
                                         'Log In',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
-                              //SizedBox(height: 20),
-                              // TextButton(
-                              //   onPressed:(){
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
-                              //     );
-                              //   },
-                              //   child: Text(
-                              //     'Forgot my password',
-                              //         style: TextStyle(
-                              //       fontSize: 14,
-                              //   ),
-                              //   ),
-                              // ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const CreateProfile(),
+                                          ),
+                                        );
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.black54,
+                                        padding: const EdgeInsets.symmetric(vertical: 14),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(16),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        'Create Account',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -201,3 +217,4 @@ class _LogInPageState extends State<LogInPage>
     );
   }
 }
+

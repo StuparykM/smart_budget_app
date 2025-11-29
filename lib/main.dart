@@ -5,7 +5,6 @@ import 'package:smart_budget_app/pages/log_in_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:smart_budget_app/pages/sorting_page.dart';
-import 'package:smart_budget_app/pages/user_profile.dart';
 import 'firebase_options.dart';
 import '../services/item_service.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +47,6 @@ class MyApp extends StatelessWidget {
           '/log_in_page': (context) => LogInPage(),
           '/dashboard': (context) => Dashboard(),
           '/create_profile': (context) => CreateProfile(),
-          '/user_profile': (context) => UserProfile(),
           '/sorting_page': (context) => SortingPage()
         }
 
