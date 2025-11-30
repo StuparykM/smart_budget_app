@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_budget_app/pages/dashboard.dart';
 import'../models/item.dart';
+import '../services/item_service.dart';
 import '../utils/category_enum.dart';
 
 class DashboardItemCard extends StatelessWidget{
@@ -49,7 +51,13 @@ class DashboardItemCard extends StatelessWidget{
               style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ),
           ),
+        onTap: () {
+          final itemService = context.read<ItemService>();
+          itemService.updateCategory(item.id, Category.unsorted);
+          Navigator.pushNamed(context, '/transactions');
+        },
       ),
     );
   }
 }
+

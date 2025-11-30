@@ -17,7 +17,6 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
-  String? _errorMessage;
   late final essential = context.watch<ItemService>().essential;
   late final nonEssential = context.watch<ItemService>().nonEssential;
   late final unsorted = context.watch<ItemService>().unsorted;
@@ -52,16 +51,19 @@ class _DashboardState extends State<Dashboard>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!_dialogShown) {
-        _dialogShown = true;
-        final service = Provider.of<ItemService>(context, listen: false);
-        showDialog(
-          context: context,
-          builder: (ctx) => BudgetDialog(service: service),
-        );
+      final service = Provider.of<ItemService>(context, listen: false);
+      if (service.budget == null || service.username == null || service.username!.isEmpty) {
+        if (!_dialogShown) {
+          _dialogShown = true;
+          showDialog(
+            context: context,
+            builder: (context) => BudgetDialog(service: service),
+          );
+        }
       }
     });
   }
+
 
 
   @override
@@ -92,7 +94,7 @@ class _DashboardState extends State<Dashboard>
               ),
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.only(top: 70),
+                  padding: EdgeInsets.only(top: 10),
                   child: Consumer<ItemService>(
                     builder: (context, service, _) {
                       return BudgetSummary(
@@ -104,7 +106,6 @@ class _DashboardState extends State<Dashboard>
                 )
               )
             ),
-
             Container(
               height: 480,
               width: double.infinity,

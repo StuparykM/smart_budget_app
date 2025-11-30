@@ -1,10 +1,6 @@
-import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_budget_app/pages/log_in_page.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import '../services/item_service.dart';
 import '../utils/category_enum.dart';
@@ -30,7 +26,7 @@ class _SortingPageState extends State<SortingPage> {
     _buildItems();
   }
 
-  void _buildItems(){
+  void _buildItems() {
     final service = context.read<ItemService>();
 
     final swipeItems = service.unsorted.map((item) {
@@ -76,38 +72,60 @@ class _SortingPageState extends State<SortingPage> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF344969),
-      body: Center(
-        child: _stackFinished ?
-            ElevatedButton(
+      body: Stack(
+        children: [
+          Center(
+            child: _stackFinished
+                ? ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/dashboard');
-            },
-            child: const Text('Back to Dashboard'),
+              },
+              child: const Text('Back to Dashboard'),
             )
-        : SizedBox(
-          width: MediaQuery.of(context).size.width * 0.85,
-          height: MediaQuery.of(context).size.height * 0.6,
-          child: SwipeCards(
-            matchEngine: _matchEngine,
-            itemBuilder: (context, index) {
-              final item = _matchEngine.currentItem?.content as Item;
-              return SortingItemCard(item: item);
-            },
-            onStackFinished: () {
-                setState(() {
-                  _stackFinished = true;
-                });
-            },
+                : SizedBox(
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 0.85,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.6,
+              child: SwipeCards(
+                matchEngine: _matchEngine,
+                itemBuilder: (context, index) {
+                  final item =
+                  _matchEngine.currentItem?.content as Item;
+                  return SortingItemCard(item: item);
+                },
+                onStackFinished: () {
+                  setState(() {
+                    _stackFinished = true;
+                  });
+                },
+              ),
+            ),
           ),
-        ),
+          Positioned(
+            bottom: 10,
+            left: 0,
+            right: 0,
+            child: const Text(
+              "Swipe left for Non-Essential and Swipe right for Essential",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
       ),
-      bottomNavigationBar:
-      Container(
+      bottomNavigationBar: Container(
         height: 80,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -128,7 +146,8 @@ class _SortingPageState extends State<SortingPage> {
               onPressed: _confirmLogout,
             ),
             IconButton(
-              icon: const Icon(Icons.account_circle_outlined, color: Colors.black45),
+              icon: const Icon(Icons.account_circle_outlined,
+                  color: Colors.black45),
               onPressed: () {
                 Navigator.pushNamed(context, '/dashboard');
               },

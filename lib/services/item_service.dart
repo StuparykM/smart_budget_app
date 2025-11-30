@@ -9,6 +9,8 @@ import '../utils/category_enum.dart';
 class ItemService extends ChangeNotifier{
   late List<Item> _items = [];
   double? _budget;
+  String? _username;
+
 
   List<Item> get essential =>
       _items.where((item) => item.category == Category.essential).toList();
@@ -38,7 +40,21 @@ class ItemService extends ChangeNotifier{
     notifyListeners();
   }
 
+  void setUser(String name) {
+    _username = name;
+    notifyListeners();
+  }
+
+  void reset() {
+    _budget = null;
+    _username = null;
+    notifyListeners();
+  }
+
+
+
   double? get budget => _budget;
+  String? get username => _username;
 
   double get categorizedCost =>
       essential.fold(0.0, (sum, item) => sum + item.cost) +

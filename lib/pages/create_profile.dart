@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_budget_app/models/user.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_database/firebase_database.dart';

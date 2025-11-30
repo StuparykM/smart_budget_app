@@ -14,51 +14,68 @@ class BudgetSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final service = Provider.of<ItemService>(context);
     final overBudget = budget != null && spent > budget!;
     final remaining = budget != null ? budget! - spent : 0;
 
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Padding(
-          padding: EdgeInsets.only(top: 10),
-          child: Text(
-            budget == null
-                ? 'Budget: --'
-                : 'Budget: \$${budget!.toStringAsFixed(2)}',
+        if (service.username != null && service.username!.isNotEmpty)
+          Text(
+            "${service.username}'s Budget",
             style: const TextStyle(
-              fontSize: 24,
+              fontSize: 50,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: Colors.black87,
             ),
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Spent: \$${spent.toStringAsFixed(2)}',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: overBudget ? Colors.red : Colors.lightGreen,
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Text(
+                budget == null ? ' --' : '\$${budget!.toStringAsFixed(2)}/',
+                style: const TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Remaining: \$${remaining.toStringAsFixed(2)}',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: overBudget ? Colors.red : Colors.lightGreen,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Text(
+                    'Spent: \$${spent.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: overBudget ? Colors.red : Colors.lightGreen,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    'Remaining: \$${remaining.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: overBudget ? Colors.red : Colors.lightGreen,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
       ],
     );
   }
-
-
 }
+
