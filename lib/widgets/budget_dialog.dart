@@ -81,10 +81,6 @@ class _BudgetDialogState extends State<BudgetDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
-        ),
         ElevatedButton(
           onPressed: _save,
           child: const Text('Save'),

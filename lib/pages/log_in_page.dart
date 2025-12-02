@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_budget_app/pages/create_profile.dart';
-import 'package:smart_budget_app/pages/forgot_password.dart';
 import 'package:smart_budget_app/pages/dashboard.dart';
 import 'package:smart_budget_app/services/auth_service.dart';
 
@@ -151,11 +150,7 @@ class _LogInPageState extends State<LogInPage>
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Expanded(
-                                    child: _isLoading
-                                        ? const Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                        : ElevatedButton(
+                                  child: ElevatedButton(
                                       onPressed: () async {
                                         await AuthenticationService().signIn(
                                           email: _emailController.text.trim(),
