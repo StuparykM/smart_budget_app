@@ -1,9 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:smart_budget_app/services/auth_service.dart';
 
 import 'log_in_page.dart';
@@ -30,12 +25,6 @@ class _CreateProfileState extends State<CreateProfile>
     super.initState();
     _obscureText = true;
     _obscureConfirm = true;
-  }
-
-  String hashPassword(String password) {
-    final bytes = utf8.encode(password);
-    final digest = sha256.convert(bytes);
-    return digest.toString();
   }
 
 
@@ -77,15 +66,19 @@ class _CreateProfileState extends State<CreateProfile>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Fill out account details below',
-                        style: TextStyle(color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,)),
+                        Text(
+                          'Fill out account details below',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
                         const SizedBox(height: 10),
                         TextFormField(
                           controller: _email,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
                             hintText: 'Email',
                             hintStyle: TextStyle(color: Colors.white),
                             filled: false,
@@ -149,11 +142,25 @@ class _CreateProfileState extends State<CreateProfile>
                         Center(
                           child: ElevatedButton(
                             onPressed: () async {
-                              AuthenticationService().signup(
+                              if (_password.text.trim() !=
+                                  _confirmPass.text.trim()) {
+                                setState(() {
+                                  _errorMessage = "Passwords do not match";
+                                });
+                                return;
+                              }
+                              setState(() {
+                                _errorMessage = null;
+                                _isLoading = true;
+                              });
+                              await AuthenticationService().signup(
                                 email: _email.text.trim(),
                                 password: _password.text.trim(),
                                 context: context,
                               );
+                              setState(() {
+                                _isLoading = false;
+                              });
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black54,
@@ -171,6 +178,18 @@ class _CreateProfileState extends State<CreateProfile>
                             ),
                           ),
                         ),
+                        const SizedBox(height: 12),
+                        if (_errorMessage != null)
+                          Center(
+                            child: Text(
+                              _errorMessage!,
+                              style: const TextStyle(
+                                color: Colors.redAccent,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                         const SizedBox(height: 12),
                         Center(
                           child: TextButton(
@@ -204,4 +223,3 @@ class _CreateProfileState extends State<CreateProfile>
     );
   }
 }
-

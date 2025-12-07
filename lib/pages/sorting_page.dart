@@ -18,7 +18,6 @@ class _SortingPageState extends State<SortingPage> {
   String? _errorMessage;
   late MatchEngine _matchEngine;
   bool _stackFinished = false;
-  Alignment? _alignment;
 
   @override
   void initState() {

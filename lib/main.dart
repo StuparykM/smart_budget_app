@@ -10,7 +10,7 @@ import '../services/item_service.dart';
 import 'package:provider/provider.dart';
 
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     if (Firebase.apps.isEmpty) {
@@ -25,7 +25,7 @@ void main() async{
       rethrow;
     }
   }
-
+  await FirebaseAuth.instance.signOut();
 
   runApp(
     ChangeNotifierProvider(
@@ -33,8 +33,10 @@ void main() async{
       child: const MyApp(),
     ),
   );
-
 }
+
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -42,15 +44,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FirebaseAuth.instance.currentUser == null ? LogInPage() : Dashboard(),
-        routes: {
-          '/log_in_page': (context) => LogInPage(),
-          '/dashboard': (context) => Dashboard(),
-          '/create_profile': (context) => CreateProfile(),
-          '/sorting_page': (context) => SortingPage()
-        }
-
+      home: LogInPage(),
+      routes: {
+        '/log_in_page': (context) => LogInPage(),
+        '/dashboard': (context) => Dashboard(),
+        '/create_profile': (context) => CreateProfile(),
+        '/sorting_page': (context) => SortingPage(),
+      },
     );
   }
-
 }
+
